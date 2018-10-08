@@ -1,6 +1,5 @@
 function parallel_null_and_curves(null_size, days_to_event, event, min_threshold,
     max_threshold, expression_mat, num_workers)
-
     println("preparing parallel jobs")
     # moving existing variables to every process via forcing them not global
     let null_size = null_size
