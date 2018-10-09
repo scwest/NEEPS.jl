@@ -49,12 +49,14 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
         println("\trefreshing every 5 seconds")
         null_left = length(null_jobs) - sum(null_jobs)
         llp_left = length(llp_jobs) - sum(llp_jobs)
+        time_passed = 0
         while null_left > 0 && llp_left > 0
             null_left = length(null_jobs) - sum(null_jobs)
             llp_left = length(llp_jobs) - sum(llp_jobs)
-            print("\tNull Jobs Left: $null_left\tSurvival Jobs Left: $llp_left\r")
+            print("\tNull Jobs Left: $null_left\tSurvival Jobs Left: $llp_left\tTime Passed: $time_passed\r")
             flush(STDOUT)
             sleep(5)
+            time_passed += 5
         end
         println("")
     end
