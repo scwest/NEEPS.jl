@@ -16,7 +16,7 @@ function get_ordered_indices(expression, min_threshold, max_threshold)
     group = zeros(length(expression))
     lowest_0_index = convert(Int16, floor(length(expression)*min_threshold))
     largest_threshold_index = convert(Int16, floor(length(expression)*max_threshold))
-    p = sortperm(expression)[largest_0_index:largest_threshold_index]
+    p = sortperm(expression)[lowest_0_index:largest_threshold_index]
     group[p] = 1
     p, group
 end
