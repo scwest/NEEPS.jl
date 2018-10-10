@@ -35,7 +35,7 @@ end
 function generate_neep_all(null_ps, lowest_pvals)
     # generate the NEEP p-values using the null distribution
     print("generating empirically estimated p-values")
-    null_ps = sorted(null_ps)
+    null_ps = sort(null_ps)
     sorted_lowest_pvals = sort(lowest_pvals, rev=true)
     indexed_lowest_pvals = sortperm(lowest_pvals, rev=true)
     unordered_neep_pvals = generate_neep_pvals(sorted_lowest_pvals, null_ps) # from transformation.jl

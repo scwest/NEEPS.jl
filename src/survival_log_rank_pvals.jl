@@ -32,11 +32,14 @@ function lowest_logrank_p(days_to_event, event, expression,
     # min/max threshold are for splitting KM curves
 
     # prepare for iterations
+    println("getting ordered indices")
     p, group = get_ordered_indices(expression, min_threshold, max_threshold)
     # reverse p since pop is faster than shift
     p = flipdim(p, 1)
     lowest_pval = 1
+    println("beggining the suspicious loop")
     while !isempty(p)
+        println(p)
         # move to the next threshold
         # find the index of the next lowest expression value
         group[pop!(p)] = 0  # set that spot to equal 0 (be in KM curve 'low')
@@ -81,7 +84,9 @@ end
 function null_run(days_to_event, event, min_threshold,
     max_threshold)
     expression = rand(length(days_to_event))
+    print("\nsub run start\n")
     llp = lowest_logrank_p(days_to_event, event, expression, min_threshold,
+    print("\nsub run end\n")
     max_threshold)
     return llp
 end
