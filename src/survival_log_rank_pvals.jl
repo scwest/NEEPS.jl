@@ -86,7 +86,7 @@ function null_run(days_to_event, event, min_threshold,
     expression = rand(length(days_to_event))
     print("\nsub run start\n")
     llp = lowest_logrank_p(days_to_event, event, expression, min_threshold,
-    print("\nsub run end\n")
     max_threshold)
+    print("\nsub run end\n")
     return llp
 end
