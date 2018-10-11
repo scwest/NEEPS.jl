@@ -56,36 +56,35 @@ function get_test_statistic(days_to_event, event, group)
     n1s = sum(group)
     n = [length(group)-n1s, n1s]
     m = [0,0]
+    g = [0,0]
     s = 0.0
     ss = 0.0
     prev_days = 0
     for i in 1:length(days_to_event)
-        if event[i] == 0
-            n[group[i]+1] -= 1
-        else
-            if days_to_event[i] == prev_days
-                m[group[i]+1] += 1
-                n[group[i]+1] -= 1
+        if days_to_event[i] == prev_days || sum(m) == 0
+            if event[i] == 0
+                g[group[i]+1] += 1
             else
-                total += 1
-                k = get_k(m[1], m[2], n[1], n[2])
-                s += k
-                ss += k^2
-                m[group[i]+1] = 1
-                m[abs(group[i]-1)+1] = 0
-                n[group[i]+1] -= 1
-                prev_days = days_to_event[i]
+                n -= g
+                g = [0,0]
+                m[group[i]+1] += 1
+            end
+        else
+            total += 1
+            k = get_k(m[1], m[2], n[1], n[2])
+            s += k
+            ss += k^2
+            prev_days = days_to_event[i]
+
+            n -= m+g
+            m = [0,0]
+            g = [0,0]
+            if event[i] == 0
+                g[group[i]+1] += 1
+            else
+                m[group[i]+1] += 1
             end
         end
-    end
-    println(k)
-    k = get_k(m[1], m[2], n[1], n[2])
-    println(k)
-    println(m)
-    println(n)
-    s += k
-    ss += k^2
-    total += 1
     return (s/total)^2 / get_var(s, ss, total)
 end
 
