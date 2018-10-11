@@ -38,7 +38,6 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
         for i in 1:null_size
             @spawn begin
                 null_ps[i] = null_run(days_to_event, event, min_threshold, max_threshold)
-                println("one null job finished!")
                 null_jobs[i] = 1
             end
         end
@@ -46,8 +45,9 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
         #lowest_pvals = lowest_pvals = zeros(size(expression_mat)[1])
         for i in 1:size(expression_mat)[1]
             @spawn begin
+                println(expression_mat[i,:])
                 lowest_pvals[i] = lowest_logrank_p(days_to_event, event, expression_mat[i,:], min_threshold, max_threshold)
-                println("one pval job finished!")
+                println(lowest_pvals[i])
                 llp_jobs[i] = 1
             end
         end
@@ -65,6 +65,10 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
         end
         println("")
     end
+    println("Null Pvals")
+    println(null_ps)
+    println("lowest pvals")
+    println(lowest_pvals)
 
     println("all parallel jobs have finished")
     return null_ps, lowest_pvals

@@ -45,7 +45,6 @@ function lowest_logrank_p(days_to_event, event, expression,
         pval = ccdf(Chisq(1), test_statistic)
         lowest_pval = ifelse(pval < lowest_pval, pval, lowest_pval)
     end
-    println("but it got out!?!?!")
     return lowest_pval
 end
 
@@ -82,10 +81,7 @@ end
 function null_run(days_to_event, event, min_threshold,
     max_threshold)
     expression = rand(length(days_to_event))
-    print("\nsub run start\n")
     llp = lowest_logrank_p(days_to_event, event, expression, min_threshold,
     max_threshold)
-    print(llp)
-    print("\nsub run end\n")
     return llp
 end
