@@ -82,9 +82,12 @@ function get_test_statistic(days_to_event, event, group)
                 println("got k")
                 s += k
                 s += k^2
+                println("m issues")
                 m[group[i]+1] = 1
                 m[abs(group[i]-1)+1] = 0
+                println("n issues")
                 n[group[i]+1] -= 1
+                println("Next day etc")
                 prev_days = days_to_event[i]
                 println("ending section")
             end
