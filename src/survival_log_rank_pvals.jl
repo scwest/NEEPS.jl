@@ -35,7 +35,7 @@ function lowest_logrank_p(days_to_event, event, expression,
     p, group = get_ordered_indices(expression, min_threshold, max_threshold)
     # reverse p since pop is faster than shift
     p = flipdim(p, 1)
-    lowest_pval = 1
+    lowest_pval = 1.0
     while !isempty(p)
         #println(p)
         # move to the next threshold
@@ -78,6 +78,9 @@ function get_test_statistic(days_to_event, event, group)
             end
         end
     end
+    k = get_k(m[1], m[2], n[1], n[2])
+    s += k
+    ss += k^2
     return (s/total)^2 / get_var(s, ss, total)
 end
 
