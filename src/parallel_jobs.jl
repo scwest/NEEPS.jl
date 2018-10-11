@@ -21,7 +21,7 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
         @everywhere expression_mat = $expression_mat
     end
 
-    null_jobs = @spawnat remotes[1] SharedArray{Int, 1}((null_size))
+    null_jobs = SharedArray{Int, 1}((null_size))
     llp_jobs = SharedArray{Int, 1}((size(expression_mat)[1]))
 
     @everywhere include("survival_log_rank_pvals.jl")
