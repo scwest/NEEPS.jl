@@ -66,12 +66,16 @@ function get_test_statistic(days_to_event, event, group)
     for i in 1:length(days_to_event)
         println("$i START")
         if event[i] == 0
+            println("event == 0")
             n[group[i]+1] -= 1
         else
+            println("event != 0")
             if days_to_event[i] == prev_days
+                println("days to event == prev days")
                 m[group[i]+1] += 1
                 n[group[i]+1] -= 1
             else
+                println("days to event != prev days")
                 total += 1
                 k = get_k(m[1], m[2], n[1], n[2])
                 s += k
