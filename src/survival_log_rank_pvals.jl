@@ -39,14 +39,17 @@ function lowest_logrank_p(days_to_event, event, expression,
     lowest_pval = 1
     println("beggining the suspicious loop")
     while !isempty(p)
-        println(p)
+        #println(p)
         # move to the next threshold
         # find the index of the next lowest expression value
         group[pop!(p)] = 0  # set that spot to equal 0 (be in KM curve 'low')
+        println("getting test statistic")
         test_statistic = get_test_statistic(days_to_event, event, group)
+        println("ccdf")
         pval = ccdf(Chisq(1), test_statistic)
+        println("ifelse")
         lowest_pval = ifelse(pval < lowest_pval, pval, lowest_pval)
-
+        println("why won't it go to next cycle")
     end
 end
 
@@ -58,8 +61,9 @@ function get_test_statistic(days_to_event, event, group)
     s = 0
     ss = 0
     prev_days = 0
-
+    println("getting test statistic (beggining loop)")
     for i in 1:length(days_to_event)
+        println(i)
         if e[i] == 0
             n[group[i]+1] -= 1
         else
