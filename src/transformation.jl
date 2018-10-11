@@ -18,9 +18,6 @@ function generate_neep_pvals(sorted_lowest_pvals, null_ps)
                 break
             end
         end
-        if isempty(sorted_lowest_pvals)
-            break
-        end
     end
     return neep_pvals
 end
