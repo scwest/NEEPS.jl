@@ -5,11 +5,12 @@ transformation of lowest-pvalues using estimated null distribution
 """
 function generate_neep_pvals(sorted_lowest_pvals, null_ps)
     neep_pvals = zeros(length(sorted_lowest_pvals))
+    neep_pvals[:] = 1
     pval = pop!(sorted_lowest_pvals)
     spot = 1
     for i in 1:length(null_ps)
         while pval < null_ps[i]
-            neep_pvals[spot] = i / length(null_ps)
+            neep_pvals[spot] = (i-1) / length(null_ps)
             spot += 1
             if !isempty(sorted_lowest_pvals)
                 pval = pop!(sorted_lowest_pvals)
@@ -21,14 +22,6 @@ function generate_neep_pvals(sorted_lowest_pvals, null_ps)
             break
         end
     end
-
-    if !isempty(sorted_lowest_pvals)
-        for _ in 1:length(sorted_lowest_pvals)
-            neep_pvals[spot] = 1
-            spot += 1
-        end
-    end
-
     return neep_pvals
 end
 
@@ -39,6 +32,8 @@ function generate_neep_all(null_ps, lowest_pvals)
     println(lowest_pvals)
     sorted_lowest_pvals = sort(lowest_pvals, rev=true)
     indexed_lowest_pvals = sortperm(lowest_pvals, rev=true)
+    println(sorted_lowest_pvals)
+    println(null_ps)
     unordered_neep_pvals = generate_neep_pvals(sorted_lowest_pvals, null_ps) # from transformation.jl
     println(unordered_neep_pvals)
     ordered_neep_pvals = getindex.(sort(collect(zip(indexed_lowest_pvals, unordered_neep_pvals)), by=x->x[1]), 1)
