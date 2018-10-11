@@ -22,6 +22,7 @@ function generate_neep_pvals(sorted_lowest_pvals, null_ps)
         end
         if b
             break
+        end
     end
     return neep_pvals
 end
