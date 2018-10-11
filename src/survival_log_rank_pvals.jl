@@ -66,36 +66,25 @@ function get_test_statistic(days_to_event, event, group)
     for i in 1:length(days_to_event)
         println("$i START")
         if event[i] == 0
-            println("event == 0")
             n[group[i]+1] -= 1
         else
-            println("event != 0")
             if days_to_event[i] == prev_days
-                println("days to event == prev days")
                 m[group[i]+1] += 1
                 n[group[i]+1] -= 1
             else
-                println("days to event != prev days")
                 total += 1
-                println("getting k")
                 k = get_k(m[1], m[2], n[1], n[2])
-                println("got k")
                 s += k
                 s += k^2
-                println("m issues")
                 m[group[i]+1] = 1
-                println("other m issues")
                 m[abs(group[i]-1)+1] = 0
-                println("n issues")
                 n[group[i]+1] -= 1
-                println("Next day etc")
                 prev_days = days_to_event[i]
-                println("ending section")
             end
-            println("end of event != 0")
         end
         println("$i END")
     end
+    println("real end")
     return (s/total)^2 / get_var(s, ss, total)
 end
 
