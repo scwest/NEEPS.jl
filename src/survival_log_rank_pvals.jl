@@ -46,6 +46,7 @@ function lowest_logrank_p(days_to_event, event, expression,
         lowest_pval = ifelse(pval < lowest_pval, pval, lowest_pval)
     end
     println("but it got out!?!?!")
+    return lowest_pval
 end
 
 function get_test_statistic(days_to_event, event, group)
