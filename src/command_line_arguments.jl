@@ -58,6 +58,7 @@ function get_input()
     println("uploading expression file")
     expression_mat, element_order =
     upload_expression(parsed_args["expression_filename"], clinical_patient_order)
+    println(expression_mat)
 
     println("setting standard variables")
     min_threshold = parsed_args["min_thresh"]

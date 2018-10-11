@@ -3,8 +3,6 @@ clinical_patient_order, days_to_event, event, expression_mat,
 element_order, min_threshold, max_threshold, null_size, output_filename,
 num_workers = get_input()
 
-println(expression_mat)
-
 addprocs(num_workers)
 @everywhere using NEEPS
 
