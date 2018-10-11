@@ -36,6 +36,7 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
             @spawn begin
                 null_ps[i] = null_run(days_to_event, event, min_threshold, max_threshold)
                 null_jobs[i] = 1
+                println(null_jobs)
             end
         end
 
@@ -44,6 +45,7 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
             @spawn begin
                 lowest_pvals[i] = lowest_logrank_p(days_to_event, event, expression_mat[i], min_threshold, max_threshold)
                 llp_jobs[i] = 1
+                println(llp_jobs)
             end
         end
         println("\trefreshing every 5 seconds")

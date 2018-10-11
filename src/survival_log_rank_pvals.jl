@@ -32,24 +32,18 @@ function lowest_logrank_p(days_to_event, event, expression,
     # min/max threshold are for splitting KM curves
 
     # prepare for iterations
-    println("getting ordered indices")
     p, group = get_ordered_indices(expression, min_threshold, max_threshold)
     # reverse p since pop is faster than shift
     p = flipdim(p, 1)
     lowest_pval = 1
-    println("beggining the suspicious loop")
     while !isempty(p)
         #println(p)
         # move to the next threshold
         # find the index of the next lowest expression value
         group[pop!(p)] = 0  # set that spot to equal 0 (be in KM curve 'low')
-        println("getting test statistic")
         test_statistic = get_test_statistic(days_to_event, event, group)
-        println("ccdf")
         pval = ccdf(Chisq(1), test_statistic)
-        println("ifelse")
         lowest_pval = ifelse(pval < lowest_pval, pval, lowest_pval)
-        println("why won't it go to next cycle")
     end
     println("but it got out!?!?!")
 end
@@ -62,7 +56,6 @@ function get_test_statistic(days_to_event, event, group)
     s = 0.0
     ss = 0.0
     prev_days = 0
-    println("getting test statistic (beggining loop)")
     for i in 1:length(days_to_event)
         if event[i] == 0
             n[group[i]+1] -= 1
@@ -82,7 +75,6 @@ function get_test_statistic(days_to_event, event, group)
             end
         end
     end
-    println("real end")
     return (s/total)^2 / get_var(s, ss, total)
 end
 
@@ -92,6 +84,7 @@ function null_run(days_to_event, event, min_threshold,
     print("\nsub run start\n")
     llp = lowest_logrank_p(days_to_event, event, expression, min_threshold,
     max_threshold)
+    print(llp)
     print("\nsub run end\n")
     return llp
 end
