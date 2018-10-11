@@ -8,6 +8,7 @@ function generate_neep_pvals(sorted_lowest_pvals, null_ps)
     neep_pvals[:] = 1
     pval = pop!(sorted_lowest_pvals)
     spot = 1
+    b = false
     for i in 1:length(null_ps)
         while pval < null_ps[i]
             neep_pvals[spot] = (i-1) / length(null_ps)
@@ -15,9 +16,12 @@ function generate_neep_pvals(sorted_lowest_pvals, null_ps)
             if !isempty(sorted_lowest_pvals)
                 pval = pop!(sorted_lowest_pvals)
             else
+                b = true
                 break
             end
         end
+        if b
+            break
     end
     return neep_pvals
 end
