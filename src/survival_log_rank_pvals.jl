@@ -85,6 +85,7 @@ function get_test_statistic(days_to_event, event, group)
                 m[group[i]+1] += 1
             end
         end
+    end
     return (s/total)^2 / get_var(s, ss, total)
 end
 
