@@ -51,6 +51,7 @@ function lowest_logrank_p(days_to_event, event, expression,
         lowest_pval = ifelse(pval < lowest_pval, pval, lowest_pval)
         println("why won't it go to next cycle")
     end
+    println("but it got out!?!?!")
 end
 
 function get_test_statistic(days_to_event, event, group)
@@ -63,7 +64,7 @@ function get_test_statistic(days_to_event, event, group)
     prev_days = 0
     println("getting test statistic (beggining loop)")
     for i in 1:length(days_to_event)
-        println(i)
+        println("$i START")
         if e[i] == 0
             n[group[i]+1] -= 1
         else
@@ -81,6 +82,7 @@ function get_test_statistic(days_to_event, event, group)
                 prev_days = days_to_event[i]
             end
         end
+        println("$i END")
     end
     return (s/total)^2 / get_var(s, ss, total)
 end
