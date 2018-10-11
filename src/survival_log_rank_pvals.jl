@@ -66,8 +66,10 @@ function get_test_statistic(days_to_event, event, group)
             else
                 total += 1
                 k = get_k(m[1], m[2], n[1], n[2])
+                println("K")
+                println(k)
                 s += k
-                s += k^2
+                ss += k^2
                 m[group[i]+1] = 1
                 m[abs(group[i]-1)+1] = 0
                 n[group[i]+1] -= 1
