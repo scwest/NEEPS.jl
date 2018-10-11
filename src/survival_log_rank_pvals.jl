@@ -42,7 +42,10 @@ function lowest_logrank_p(days_to_event, event, expression,
         # find the index of the next lowest expression value
         group[pop!(p)] = 0  # set that spot to equal 0 (be in KM curve 'low')
         test_statistic = get_test_statistic(days_to_event, event, group)
+        println("test statistic")
+        println(test_statistic)
         pval = ccdf(Chisq(1), test_statistic)
+        println(pval)
         lowest_pval = ifelse(pval < lowest_pval, pval, lowest_pval)
     end
     return lowest_pval
@@ -66,8 +69,6 @@ function get_test_statistic(days_to_event, event, group)
             else
                 total += 1
                 k = get_k(m[1], m[2], n[1], n[2])
-                println("K")
-                println(k)
                 s += k
                 ss += k^2
                 m[group[i]+1] = 1
