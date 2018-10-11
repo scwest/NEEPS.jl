@@ -5,7 +5,7 @@ using Distributions
 Simple Functions
 """
 # calculate the stepwise e value for generating log-rank statistic
-get_k(m1, m2, n1, n2) = m1 - n1 * (m1+m2) / (n1+n2)
+get_e(m1, m2, n1, n2) = n1 * (m1+m2) / (n1+n2)
 
 # calculate variance from sum and sum of squares, and total
 get_var(s::Float64, ss::Float64, total::Int64) = (ss - (s^2 / total)) / (total - 1)
@@ -41,18 +41,15 @@ function lowest_logrank_p(days_to_event, event, expression,
         # move to the next threshold
         # find the index of the next lowest expression value
         group[pop!(p)] = 0  # set that spot to equal 0 (be in KM curve 'low')
-        println("test statistic")
         test_statistic = get_test_statistic(days_to_event, event, group)
-        println(test_statistic)
         pval = ccdf(Chisq(1), test_statistic)
-        println(pval)
         lowest_pval = ifelse(pval < lowest_pval, pval, lowest_pval)
     end
     return lowest_pval
 end
 
 function get_test_statistic(days_to_event, event, group)
-    total = 0::Int64
+    total = [0,0]
     n1s = sum(group)
     n = [length(group)-n1s, n1s]
     m = [0,0]
@@ -71,11 +68,11 @@ function get_test_statistic(days_to_event, event, group)
             end
         else
             total += 1
-            k = get_k(m[1], m[2], n[1], n[2])
-            s += k
-            ss += k^2
+            e = get_e(m[1], m[2], n[1], n[2])
+            s += e
             prev_days = days_to_event[i]
 
+            total += m
             n -= m+g
             m = [0,0]
             g = [0,0]
