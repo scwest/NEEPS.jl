@@ -67,7 +67,6 @@ function get_test_statistic(days_to_event, event, group)
                 m[group[i]+1] += 1
             end
         else
-            total += 1
             e = get_e(m[1], m[2], n[1], n[2])
             s += e
             prev_days = days_to_event[i]
@@ -83,7 +82,11 @@ function get_test_statistic(days_to_event, event, group)
             end
         end
     end
-    return (s/total)^2 / get_var(s, ss, total)
+    a = (total[1] - s)^2 / s
+    s2 = total[1]+total[2]-s
+    b = (total[2] - s2)^2 / s2
+
+    return a+b
 end
 
 function null_run(days_to_event, event, min_threshold,
