@@ -34,13 +34,15 @@ end
 
 function generate_neep_all(null_ps, lowest_pvals)
     # generate the NEEP p-values using the null distribution
-    print("generating empirically estimated p-values")
+    println("generating empirically estimated p-values")
     null_ps = sort(null_ps)
+    println(lowest_pvals)
     sorted_lowest_pvals = sort(lowest_pvals, rev=true)
     indexed_lowest_pvals = sortperm(lowest_pvals, rev=true)
     unordered_neep_pvals = generate_neep_pvals(sorted_lowest_pvals, null_ps) # from transformation.jl
+    println(unordered_neep_pvals)
     ordered_neep_pvals = getindex.(sort(collect(zip(indexed_lowest_pvals, unordered_neep_pvals)), by=x->x[1]), 1)
-    print(ordered_neep_pvals)
+    println(ordered_neep_pvals)
     ordered_neep_adj_pvals = adjust(ordered_neep_pvals, BenjaminiHochberg())
     return ordered_neep_adj_pvals
 end
