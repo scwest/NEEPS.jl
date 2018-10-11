@@ -65,7 +65,7 @@ function get_test_statistic(days_to_event, event, group)
     println("getting test statistic (beggining loop)")
     for i in 1:length(days_to_event)
         println("$i START")
-        if e[i] == 0
+        if event[i] == 0
             n[group[i]+1] -= 1
         else
             if days_to_event[i] == prev_days
