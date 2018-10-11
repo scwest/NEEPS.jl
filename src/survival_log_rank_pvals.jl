@@ -13,7 +13,7 @@ get_var(s::Float64, ss::Float64, total::Int16) = (ss - (s^2 / total)) / (total -
 # return ordered list of indices to change from group = 0 to group = 1
 # also initializes group array
 function get_ordered_indices(expression, min_threshold, max_threshold)
-    group = zeros(length(expression))
+    group = Array{Bool}(length(expression))
     lowest_0_index = convert(Int16, floor(length(expression)*min_threshold))
     largest_threshold_index = convert(Int16, floor(length(expression)*max_threshold))
     p = sortperm(expression)[lowest_0_index:largest_threshold_index]
@@ -84,6 +84,7 @@ function get_test_statistic(days_to_event, event, group)
                 s += k^2
                 println("m issues")
                 m[group[i]+1] = 1
+                println("other m issues")
                 m[abs(group[i]-1)+1] = 0
                 println("n issues")
                 n[group[i]+1] -= 1
