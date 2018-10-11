@@ -79,6 +79,7 @@ function get_test_statistic(days_to_event, event, group)
                 total += 1
                 println("getting k")
                 k = get_k(m[1], m[2], n[1], n[2])
+                println("got k")
                 s += k
                 s += k^2
                 m[group[i]+1] = 1
