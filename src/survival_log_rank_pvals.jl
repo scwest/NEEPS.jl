@@ -8,7 +8,7 @@ Simple Functions
 get_k(m1, m2, n1, n2) = m1 - n1 * (m1+m2) / (n1+n2)
 
 # calculate variance from sum and sum of squares, and total
-get_var(s::Float64, ss::Float64, total::Int16) = (ss - (s^2 / total)) / (total - 1)
+get_var(s::Float64, ss::Float64, total::Int64) = (ss - (s^2 / total)) / (total - 1)
 
 # return ordered list of indices to change from group = 0 to group = 1
 # also initializes group array
@@ -55,16 +55,15 @@ function lowest_logrank_p(days_to_event, event, expression,
 end
 
 function get_test_statistic(days_to_event, event, group)
-    total = 0
+    total = 0::Int64
     n1s = sum(group)
     n = [length(group)-n1s, n1s]
     m = [0,0]
-    s = 0
-    ss = 0
+    s = 0.0
+    ss = 0.0
     prev_days = 0
     println("getting test statistic (beggining loop)")
     for i in 1:length(days_to_event)
-        println("$i START")
         if event[i] == 0
             n[group[i]+1] -= 1
         else
@@ -82,7 +81,6 @@ function get_test_statistic(days_to_event, event, group)
                 prev_days = days_to_event[i]
             end
         end
-        println("$i END")
     end
     println("real end")
     return (s/total)^2 / get_var(s, ss, total)
