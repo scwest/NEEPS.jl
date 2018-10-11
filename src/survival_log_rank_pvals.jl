@@ -78,14 +78,14 @@ function get_test_statistic(days_to_event, event, group)
             end
         end
     end
+    println(k)
     k = get_k(m[1], m[2], n[1], n[2])
+    println(k)
+    println(m)
+    println(n)
     s += k
     ss += k^2
     total += 1
-    println(s)
-    println(ss)
-    println(total)
-    println(k)
     return (s/total)^2 / get_var(s, ss, total)
 end
 
