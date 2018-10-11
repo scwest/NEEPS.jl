@@ -77,6 +77,7 @@ function get_test_statistic(days_to_event, event, group)
             else
                 println("days to event != prev days")
                 total += 1
+                println("getting k")
                 k = get_k(m[1], m[2], n[1], n[2])
                 s += k
                 s += k^2
@@ -84,7 +85,9 @@ function get_test_statistic(days_to_event, event, group)
                 m[abs(group[i]-1)+1] = 0
                 n[group[i]+1] -= 1
                 prev_days = days_to_event[i]
+                println("ending section")
             end
+            println("end of event != 0")
         end
         println("$i END")
     end
