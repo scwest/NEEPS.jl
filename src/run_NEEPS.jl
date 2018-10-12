@@ -12,6 +12,7 @@ event, min_threshold, max_threshold, expression_mat, num_workers)
 println("length of null_ps")
 println(length(null_ps))
 println(null_ps)
+println(lowest_pvals)
 
 ordered_neep_adj_pvals = generate_neep_all(null_ps, lowest_pvals)
 
