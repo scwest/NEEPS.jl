@@ -28,7 +28,6 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
 
 
     @everywhere include("survival_log_rank_pvals.jl")
-    include("transformation.jl")
 
     # create a channel with the jobs for the null distribution
     println("running parallel jobs")

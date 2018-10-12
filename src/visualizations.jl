@@ -4,7 +4,6 @@ using Plots
 using GR
 
 function null_vs_lowest(null_ps, lowest_pvals, outfilename)
-    gr()
     null_ps = null_ps[1:length(lowest_pvals)]
     lpname = Array{String, 1}(length(lowest_pvals))
     lpname[:] = "Lowest p-value"
@@ -17,6 +16,7 @@ function null_vs_lowest(null_ps, lowest_pvals, outfilename)
     rename!(df, :x1 => :vals)
     rename!(df, :x2 => :dist)
 
+    gr()
     beginprint(outfilename)
     @df df density(:vals, group=(:dist))
     plot!(xlabel="p-value", ylabel="density")
