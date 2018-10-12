@@ -12,6 +12,7 @@ event, min_threshold, max_threshold, expression_mat, num_workers)
 println("Expression Matrix")
 for i in 1:size(expression_mat)[1]
     println(expression_mat[i,:])
+end
 println("\n")
 
 println("Null Pvals")
