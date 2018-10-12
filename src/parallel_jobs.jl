@@ -64,10 +64,6 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
         end
         println("")
     end
-    println("Null Pvals")
-    println(null_ps)
-    println("lowest pvals")
-    println(lowest_pvals)
 
     println("all parallel jobs have finished")
     return null_ps, lowest_pvals
