@@ -9,6 +9,10 @@ addprocs(num_workers)
 null_ps, lowest_pvals = parallel_null_and_curves(null_size, days_to_event,
 event, min_threshold, max_threshold, expression_mat, num_workers)
 
+println("length of null_ps")
+println(length(null_ps))
+println(null_ps)
+
 ordered_neep_adj_pvals = generate_neep_all(null_ps, lowest_pvals)
 
 export_to_file(element_order, ordered_neep_adj_pvals, output_filename)
