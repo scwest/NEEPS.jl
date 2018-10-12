@@ -6,11 +6,11 @@ transformation of lowest-pvalues using estimated null distribution
 function generate_neep_pvals(sorted_lowest_pvals, null_ps)
     neep_pvals = zeros(length(sorted_lowest_pvals))
     neep_pvals[:] = 1
-    pval = pop!(sorted_lowest_pvals)
+    pval = pop!(sorted_lowest_pvals) # lowest p-value pulled off
     spot = 1
     b = false
     for i in 1:length(null_ps)
-        while pval > null_ps[i]
+        while pval < null_ps[i]
             neep_pvals[spot] = (i-1) / length(null_ps)
             spot += 1
             if !isempty(sorted_lowest_pvals)
