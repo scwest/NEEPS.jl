@@ -1,3 +1,5 @@
+# Giving the User an immediate response upon tool use
+println("setting up julia")
 using NEEPS
 
 # Obtain input from user and parse the clinical and expression files
@@ -6,7 +8,8 @@ element_order, min_threshold, max_threshold, null_size, output_prefix,
 num_workers = get_input()
 
 # Add workers if there are any to add
-if num_workers > 1:
+if num_workers > 1
+    println("adding workers")
     addprocs(num_workers - nworkers())
     @everywhere using NEEPS
 end
@@ -18,10 +21,12 @@ null_ps, lowest_pvals = parallel_null_and_curves(null_size, days_to_event,
 event, min_threshold, max_threshold, expression_mat, num_workers)
 
 # Construct output directory for both visuals and general
+println("generating output directory")
 mkdir(output_prefix)
 mkdir(string(output_prefix, "/visuals"))
 
 # Generate null / lowest pval distributions early to clear up space
+println("visuals stage 1 of 2")
 null_vs_lowest(null_ps, lowest_pvals,
 string(output_prefix, "/visuals/null_vs_lowest.svg"))
 
@@ -29,6 +34,7 @@ string(output_prefix, "/visuals/null_vs_lowest.svg"))
 ordered_neep_pvals = generate_neep_all(null_ps, lowest_pvals)
 
 # Visuals for final NEEP values
+println("visuals stage 2 of 2")
 alpha_choice(ordered_neep_pvals,
 string(output_prefix, "/visuals/test1_alpha_choice.svg"))
 

@@ -39,6 +39,7 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
                 null_jobs[i] = 1
             end
         end
+        println(sum(null_jobs))
 
         #lowest_pvals = lowest_pvals = zeros(size(expression_mat)[1])
         for i in 1:size(expression_mat)[1]
@@ -47,6 +48,8 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
                 llp_jobs[i] = 1
             end
         end
+        println(sum(llp_jobs))
+        println(sum(null_jobs))
         interval = 1
         println("\trefreshing every $interval seconds")
         null_left = length(null_jobs) - sum(null_jobs)
