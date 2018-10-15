@@ -2,6 +2,9 @@ module NEEPS
 
 using MultipleTesting
 using Distributions
+using DataFrames
+using Gadfly
+using ArgParse
 
 export
     export_to_file,
@@ -10,7 +13,10 @@ export
     get_input,
     null_vs_lowest,
     upload_clinical,
-    upload_expression
+    upload_expression,
+    adjust_neep_all,
+    alpha_choice,
+    null_vs_lowest
 
 include("command_line_arguments.jl")
 include("survival_log_rank_pvals.jl")

@@ -2,7 +2,7 @@ using NEEPS
 days_to_event, event, clinical_patient_order = upload_clinical("../test/test1_clinical.txt")
 expression_mat, element_order = upload_expression("../test/test1_expression.txt", clinical_patient_order)
 
-null_size = 10000
+null_size = 1000
 min_threshold = 0.15
 max_threshold = 0.85
 num_workers = 4

@@ -65,10 +65,10 @@ function get_input()
     null_size = parsed_args["null_size"]
     num_workers = parsed_args["num_workers"]
 
-    output_filename = parsed_args["output_filename"]
+    output_prefix = parsed_args["output_prefix"]
 
     return clinical_patient_order, days_to_event, event, expression_mat,
-    element_order, min_threshold, max_threshold, null_size, output_filename,
+    element_order, min_threshold, max_threshold, null_size, output_prefix,
     num_workers
 end
 
@@ -87,8 +87,8 @@ function parse_commandline()
             help = "maximum checked threshold as proportion of samples"
             arg_type = Float64
             default = 0.85
-        "--output_filename", "-o"
-            help = "full path to where the desired output will be placed"
+        "--output_prefix", "-o"
+            help = "full path to where the desired output will be placed (directory)"
         "--null_size", "-n"
             help = "length of sampled null distribution (impacts precision)"
             arg_type = Int64

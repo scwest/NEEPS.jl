@@ -35,6 +35,9 @@ function generate_neep_all(null_ps, lowest_pvals)
     indexed_lowest_pvals = sortperm(lowest_pvals)
     unordered_neep_pvals = generate_neep_pvals(sorted_lowest_pvals, null_ps) # from transformation.jl
     ordered_neep_pvals = getindex.(sort(collect(zip(indexed_lowest_pvals, unordered_neep_pvals)), by=x->x[1]), 2)
+    return ordered_neep_pvals
+end
+
+function adjust_neep_all(ordered_neep_pvals)
     ordered_neep_adj_pvals = adjust(ordered_neep_pvals, BenjaminiHochberg())
-    return ordered_neep_adj_pvals
 end
