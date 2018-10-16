@@ -34,6 +34,10 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
 
     # create a channel with the jobs for the null distribution
     println("running parallel jobs")
+    interval = 1
+    println("\trefreshing every $interval seconds")
+    null_left = length(null_jobs) - sum(null_jobs)
+    llp_left = length(llp_jobs) - sum(llp_jobs)
     @sync begin
         #null_ps = zeros(null_size)
         for i in 1:null_size
@@ -41,6 +45,8 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
                 null_ps[i] = null_run(days_to_event, event, min_threshold, max_threshold)
                 null_jobs[i] = 1
             end
+            print("\tNull Jobs Left: $null_left\tSurvival Jobs Left: $llp_left\tTime Passed: $time_passed\r")
+            flush(STDOUT)
         end
 
         #lowest_pvals = lowest_pvals = zeros(size(expression_mat)[1])
@@ -49,9 +55,9 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
                 lowest_pvals[i] = lowest_logrank_p(days_to_event, event, expression_mat[i,:], min_threshold, max_threshold)
                 llp_jobs[i] = 1
             end
+            print("\tNull Jobs Left: $null_left\tSurvival Jobs Left: $llp_left\tTime Passed: $time_passed\r")
+            flush(STDOUT)
         end
-        interval = 1
-        println("\trefreshing every $interval seconds")
         null_left = length(null_jobs) - sum(null_jobs)
         llp_left = length(llp_jobs) - sum(llp_jobs)
         time_passed = 0
