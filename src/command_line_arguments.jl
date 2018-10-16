@@ -4,18 +4,27 @@ using ArgParse
 functions for parsing specific input arguments
 """
 function upload_expression(input_filename, clinical_patient_order)
+    fsize = open(input_filename) do infile
+        for line in eachline(infile)
+            fsize += 1
+        end
+        fsize
+    end
+
     expression_mat, element_order =
     open(input_filename) do infile
         patient_order = split(strip(readline(infile)), ",")[2:end]
         indx = sortperm(patient_order, by=i->findfirst(clinical_patient_order.==i))
         element_order = String[]
-        expression_mat = Matrix(undef, 0, length(patient_order))
+        expression_mat = Matrix(undef, fsize, length(patient_order))
+        i = 1
         for line in eachline(infile)
             line = split(strip(line), ",")
             push!(element_order, line[1])
             expressions = [parse(Float64, x) for x in line[2:end]]
             expressions = expressions[indx]
-            expression_mat = [expression_mat; expressions']
+            expression_mat[i,:] = expressions'
+            i += 1
         end
         (expression_mat, element_order)
     end
