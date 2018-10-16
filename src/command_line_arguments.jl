@@ -13,7 +13,7 @@ function upload_expression(input_filename, clinical_patient_order)
         println("3")
         element_order = String[]
         println("4")
-        expression_mat = Matrix(0, length(patient_order))
+        expression_mat = Matrix(undef, 0, length(patient_order))
         println("5")
         for line in eachline(infile)
             println("6")
