@@ -6,9 +6,7 @@ functions for parsing specific input arguments
 function upload_expression(input_filename, clinical_patient_order)
     expression_mat, element_order =
     open(input_filename) do infile
-        println(clinical_patient_order)
         patient_order = split(strip(readline(infile)), ",")[2:end]
-        println(patient_order)
         indx = sortperm(patient_order, by=i->findfirst(clinical_patient_order.==i))
         println(indx)
         element_order = String[]
@@ -43,7 +41,7 @@ function upload_clinical(input_filename)
         clinical_patient_order = getindex.(combined, 3)
         (days_to_event, event, clinical_patient_order)
     end
-    return days_to_event, event, clinical_patient_order
+    return clinical_patient_order, days_to_event, event
 end
 
 
