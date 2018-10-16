@@ -6,23 +6,14 @@ functions for parsing specific input arguments
 function upload_expression(input_filename, clinical_patient_order)
     expression_mat, element_order =
     open(input_filename) do infile
-        println("1")
         patient_order = split(strip(readline(infile)), ",")[2:end]
-        println("2")
         indx = sortperm(patient_order, by=i->findfirst(clinical_patient_order.==i))
-        println("3")
         element_order = String[]
-        println("4")
         expression_mat = Matrix(undef, 0, length(patient_order))
-        println("5")
         for line in eachline(infile)
-            println("6")
             line = split(strip(line), ",")
-            println("7")
             push!(element_order, line[1])
-            println("8")
             expressions = [parse(Float64, x) for x in line[2:end]]
-            println("9")
             expressions = expressions[indx]
             expression_mat = [expression_mat; expressions']
         end
