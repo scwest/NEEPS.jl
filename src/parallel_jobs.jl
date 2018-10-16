@@ -38,6 +38,7 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
     println("\trefreshing every $interval seconds")
     null_left = length(null_jobs) - sum(null_jobs)
     llp_left = length(llp_jobs) - sum(llp_jobs)
+    time_passed = 0
     @sync begin
         #null_ps = zeros(null_size)
         for i in 1:null_size
@@ -60,7 +61,6 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
         end
         null_left = length(null_jobs) - sum(null_jobs)
         llp_left = length(llp_jobs) - sum(llp_jobs)
-        time_passed = 0
         while null_left > 0 || llp_left > 0
             null_left = length(null_jobs) - sum(null_jobs)
             llp_left = length(llp_jobs) - sum(llp_jobs)
