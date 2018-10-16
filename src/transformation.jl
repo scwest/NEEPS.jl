@@ -1,5 +1,4 @@
 using MultipleTesting
-
 """
 transformation of lowest-pvalues using estimated null distribution
 """
@@ -39,5 +38,7 @@ function generate_neep_all(null_ps, lowest_pvals)
 end
 
 function adjust_neep_all(ordered_neep_pvals)
-    ordered_neep_adj_pvals = adjust(ordered_neep_pvals, BenjaminiHochberg())
+    include("pval_adjust_BH.jl")
+    ordered_neep_adj_pvals = adjust(ordered_neep_pvals, BonjaminiHochberg())
+    return ordered_neep_adj_pvals
 end

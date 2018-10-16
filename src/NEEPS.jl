@@ -1,6 +1,5 @@
 module NEEPS
 
-using MultipleTesting
 using Distributions
 using DataFrames
 using Gadfly

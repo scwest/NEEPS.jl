@@ -35,7 +35,7 @@ ordered_neep_pvals = generate_neep_all(null_ps, lowest_pvals)
 
 # Visuals for final NEEP values
 println("visuals stage 2 of 2")
-alpha_choice(ordered_neep_pvals,
+alpha_choice(sort(ordered_neep_pvals),
 string(output_prefix, "/visuals/test1_alpha_choice.svg"))
 
 # P-value Adjustment using MultipleTesting
