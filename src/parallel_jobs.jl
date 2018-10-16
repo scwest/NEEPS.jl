@@ -1,4 +1,5 @@
 using Distributed
+using SharedArrays
 
 function parallel_null_and_curves(null_size, days_to_event, event, min_threshold,
     max_threshold, expression_mat, num_workers)

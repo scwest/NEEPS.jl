@@ -17,7 +17,7 @@ function upload_expression(input_filename, clinical_patient_order)
         patient_order = split(strip(readline(infile)), ",")[2:end]
         indx = sortperm(patient_order, by=i->findfirst(clinical_patient_order.==i))
         element_order = String[]
-        expression_mat = Matrix(undef, fsize, length(patient_order))
+        expression_mat = Array{Float64, 2}(undef, fsize, length(patient_order))
         i = 1
         for line in eachline(infile)
             line = split(strip(line), ",")
