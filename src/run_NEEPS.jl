@@ -1,5 +1,6 @@
 # Giving the User an immediate response upon tool use
 println("setting up julia")
+using Distributed
 using NEEPS
 
 # Obtain input from user and parse the clinical and expression files

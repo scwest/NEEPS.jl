@@ -1,5 +1,6 @@
 module NEEPS
 
+using Distributed
 using Distributions
 using DataFrames
 using Gadfly
