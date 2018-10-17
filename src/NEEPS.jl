@@ -16,7 +16,9 @@ export
     upload_expression,
     adjust_neep_all,
     alpha_choice,
-    null_vs_lowest
+    null_vs_lowest,
+    lowest_logrank_p,
+    null_run
 
 include("command_line_arguments.jl")
 include("survival_log_rank_pvals.jl")

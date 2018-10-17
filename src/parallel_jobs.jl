@@ -30,9 +30,6 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
     lowest_pvals = SharedArray{Float64, 1}((size(expression_mat)[1]))
     directions = SharedArray{Float64, 1}((size(expression_mat)[1]))
 
-
-    @everywhere include("survival_log_rank_pvals.jl")
-
     # create a channel with the jobs for the null distribution
     println("assigning parallel jobs")
     interval = 1
