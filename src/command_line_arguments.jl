@@ -15,9 +15,11 @@ function upload_expression(input_filename, clinical_patient_order)
     expression_mat, element_order, nc_indices =
     open(input_filename) do infile
         patient_order = split(strip(readline(infile)), ",")[2:end]
-        nc_indices = getindex(clinical_patient_order,
-                              sort(patient_order, by=i->findfirst(clinical_patient_order.==i))
-                             )
+        nc_indices = Array{Int64, 1}(undef, length(intersect(clinical_patient_order, patient_order)))
+        for i in 1:length(patient_order)
+            nc_indices[i] = findfirst(isequal(patient_order[i]), clinical_patient_order)
+        end
+        nc_indices = sort(nc_indices)
         indx = sortperm(patient_order, by=i->findfirst(clinical_patient_order.==i))
         element_order = String[]
         expression_mat = Array{Float64, 2}(undef, fsize, length(patient_order))
