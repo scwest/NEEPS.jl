@@ -32,7 +32,6 @@ function lowest_logrank_p(days_to_event, event, expression,
     # indices of expression correspond to indices of days_to_event
     # min/max threshold are for splitting KM curves
     # prepare for iterations
-    println("before goi")
     p, group = get_ordered_indices(expression, min_threshold, max_threshold)
     # reverse p since pop is faster than shift
     p = reverse(p, 1)
@@ -44,9 +43,13 @@ function lowest_logrank_p(days_to_event, event, expression,
         # move to the next threshold
         # find the index of the next lowest expression value
         group[pop!(p)] = 0  # set that spot to equal 0 (be in KM curve 'low')
+        println("before gtt")
         test_statistic, ndirection = get_test_statistic(days_to_event, event, group)
+        println("after gtt")
         pval = ccdf(Chisq(1), test_statistic)
+        println("cant be that")
         lowest_pval, direction = ifelse(pval <= lowest_pval, (pval, ndirection), (lowest_pval, direction))
+        println("ugh")
     end
     return lowest_pval, direction
 end
