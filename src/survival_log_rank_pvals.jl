@@ -32,11 +32,13 @@ function lowest_logrank_p(days_to_event, event, expression,
     # indices of expression correspond to indices of days_to_event
     # min/max threshold are for splitting KM curves
     # prepare for iterations
+    println("before goi")
     p, group = get_ordered_indices(expression, min_threshold, max_threshold)
     # reverse p since pop is faster than shift
     p = reverse(p, 1)
     lowest_pval = 1.0
     direction = true
+    println("before isempty")
     while !isempty(p)
         #println(p)
         # move to the next threshold
