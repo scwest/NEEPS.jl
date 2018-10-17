@@ -94,7 +94,9 @@ end
 function null_run(days_to_event, event, min_threshold,
     max_threshold)
     expression = rand(length(days_to_event))
+    println("before llp")
     llp, direction = lowest_logrank_p(days_to_event, event, expression, min_threshold,
+    println("after llp")
     max_threshold)
     return llp
 end

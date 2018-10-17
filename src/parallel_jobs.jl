@@ -56,6 +56,7 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
                 flush(io)
             end
         end
+        println("")
         println(length(null_jobs))
         println(sum(null_jobs))
 
