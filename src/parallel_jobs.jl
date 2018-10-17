@@ -48,8 +48,8 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
             @spawn begin
                 null_ps[i] = null_run(days_to_event, event, min_threshold, max_threshold)
                 null_jobs[i] = 1
-                e += 1
             end
+            e += 1
             if e % 1000 == 0
                 print("\r\tassigned $e of $total jobs")
                 flush(io)
@@ -61,8 +61,8 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
             @spawn begin
                 lowest_pvals[i], directions[i] = lowest_logrank_p(days_to_event, event, expression_mat[i,:], min_threshold, max_threshold)
                 llp_jobs[i] = 1
-                e += 1
             end
+            e += 1
             if e % 1000 == 0
                 print("\r\tassigned $e of $total jobs")
                 flush(io)
