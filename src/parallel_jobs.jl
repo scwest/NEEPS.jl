@@ -48,7 +48,6 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
             @spawn begin
                 null_ps[i] = null_run(days_to_event, event, min_threshold, max_threshold)
                 null_jobs[i] = 1
-                println("temp")
             end
             e += 1
             if e % 1000 == 0
