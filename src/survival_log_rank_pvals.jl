@@ -14,11 +14,12 @@ get_var(s::Float64, ss::Float64, total::Int64) = (ss - (s^2 / total)) / (total -
 # also initializes group array
 function get_ordered_indices(expression, min_threshold, max_threshold)
     group = Array{Bool, 1}(undef, length(expression))
-    group[:] = 0
+    group[:] .= 0
+    println("after")
     lowest_0_index = convert(Int16, floor(length(expression)*min_threshold))
     largest_threshold_index = convert(Int16, floor(length(expression)*max_threshold))
     p = sortperm(expression)[lowest_0_index:largest_threshold_index]
-    group[p] = 1
+    group[p] .= 1
     p, group
 end
 
