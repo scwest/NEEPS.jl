@@ -45,9 +45,10 @@ function lowest_logrank_p(days_to_event, event, expression,
         test_statistic, ndirection = get_test_statistic(days_to_event, event, group)
         pval = ccdf(Chisq(1), test_statistic)
         lowest_pval, direction = ifelse(pval <= lowest_pval, (pval, ndirection), (lowest_pval, direction))
-        println("ugh")
     end
     println("end ever")
+    println(lowest_pval)
+    println(direction)
     return lowest_pval, direction
 end
 
