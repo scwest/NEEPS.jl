@@ -4,11 +4,11 @@ using Gadfly
 function null_vs_lowest(null_ps, lowest_pvals, outfilename)
     println("producing null vs lowest plot")
     null_ps = null_ps[1:length(lowest_pvals)]
-    lpname = Array{String, 1}(length(lowest_pvals))
-    lpname[:] = "Lowest p-value"
+    lpname = Array{String, 1}(undef, length(lowest_pvals))
+    lpname[:] .= "Lowest p-value"
     lpboth = hcat(lowest_pvals, lpname)
-    nuname = Array{String, 1}(length(null_ps))
-    nuname[:] = "Null"
+    nuname = Array{String, 1}(undef, length(null_ps))
+    nuname[:] .= "Null"
     nuboth = hcat(null_ps, nuname)
     ar = vcat(lpboth, nuboth)
     df = DataFrame(ar)
@@ -22,7 +22,7 @@ function null_vs_lowest(null_ps, lowest_pvals, outfilename)
 end
 
 function make_blank_alpha_array(unp, alp)
-    rhs = Array{Float64, 1}(length(unp))
+    rhs = Array{Float64, 1}(undef, length(unp))
     for i in 1:length(unp)
         rhs[i] = alp*i/length(unp)
     end
