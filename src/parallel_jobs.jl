@@ -39,6 +39,7 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
     null_left = length(null_jobs) - sum(null_jobs)
     llp_left = length(llp_jobs) - sum(llp_jobs)
     time_passed = 0
+    io = IOBuffer()
     @sync begin
         #null_ps = zeros(null_size)
         for i in 1:null_size
@@ -47,7 +48,7 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
                 null_jobs[i] = 1
             end
             print("\tNull Jobs Left: $null_left\tSurvival Jobs Left: $llp_left\tTime Passed: $time_passed\r")
-            flush(STDOUT)
+            flush(io)
         end
 
         #lowest_pvals = lowest_pvals = zeros(size(expression_mat)[1])
@@ -57,7 +58,7 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
                 llp_jobs[i] = 1
             end
             print("\tNull Jobs Left: $null_left\tSurvival Jobs Left: $llp_left\tTime Passed: $time_passed\r")
-            flush(STDOUT)
+            flush(io)
         end
         null_left = length(null_jobs) - sum(null_jobs)
         llp_left = length(llp_jobs) - sum(llp_jobs)
@@ -65,7 +66,7 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
             null_left = length(null_jobs) - sum(null_jobs)
             llp_left = length(llp_jobs) - sum(llp_jobs)
             print("\tNull Jobs Left: $null_left\tSurvival Jobs Left: $llp_left\tTime Passed: $time_passed\r")
-            flush(STDOUT)
+            flush(io)
             sleep(interval)
             time_passed += interval
         end
