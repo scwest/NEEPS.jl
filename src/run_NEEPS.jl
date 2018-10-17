@@ -11,7 +11,7 @@ num_workers = get_input()
 # Add workers if there are any to add
 if num_workers > 1
     println("adding workers")
-    addprocs(num_workers - nworkers())
+    addprocs(num_workers)
     @everywhere using NEEPS
 end
 
