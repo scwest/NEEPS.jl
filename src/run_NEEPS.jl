@@ -18,7 +18,7 @@ end
 # Run parallel jobs:
 # 1) Calculation of a null distribution using only the clinical samples
 # 2) Calculation of the p-values for given expression patterns in exp. file
-null_ps, lowest_pvals = parallel_null_and_curves(null_size, days_to_event,
+null_ps, lowest_pvals, directions = parallel_null_and_curves(null_size, days_to_event,
 event, min_threshold, max_threshold, expression_mat, num_workers)
 
 # Construct output directory for both visuals and general
@@ -43,5 +43,5 @@ string(output_prefix, "/visuals/test1_alpha_choice.svg"))
 ordered_neep_adj_pvals = adjust_neep_all(ordered_neep_pvals)
 
 # Final p-value export
-export_to_file(element_order, ordered_neep_adj_pvals,
+export_to_file(element_order, ordered_neep_adj_pvals, directions,
 string(output_prefix, "/neep_adjusted_pvalues.txt"))

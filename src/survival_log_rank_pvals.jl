@@ -37,16 +37,17 @@ function lowest_logrank_p(days_to_event, event, expression,
     # reverse p since pop is faster than shift
     p = flipdim(p, 1)
     lowest_pval = 1.0
+    direction = true
     while !isempty(p)
         #println(p)
         # move to the next threshold
         # find the index of the next lowest expression value
         group[pop!(p)] = 0  # set that spot to equal 0 (be in KM curve 'low')
-        test_statistic = get_test_statistic(days_to_event, event, group)
+        test_statistic, ndirection = get_test_statistic(days_to_event, event, group)
         pval = ccdf(Chisq(1), test_statistic)
-        lowest_pval = ifelse(pval < lowest_pval, pval, lowest_pval)
+        lowest_pval, direction = ifelse(pval <= lowest_pval, (pval, ndirection), (lowest_pval, direction))
     end
-    return lowest_pval
+    return lowest_pval, direction
 end
 
 function get_test_statistic(days_to_event, event, group)
@@ -87,13 +88,13 @@ function get_test_statistic(days_to_event, event, group)
     s2 = total[1]+total[2]-s
     b = (total[2] - s2)^2 / s2
 
-    return a+b
+    return a+b, (total[1] - s) > 0
 end
 
 function null_run(days_to_event, event, min_threshold,
     max_threshold)
     expression = rand(length(days_to_event))
-    llp = lowest_logrank_p(days_to_event, event, expression, min_threshold,
+    llp, direction = lowest_logrank_p(days_to_event, event, expression, min_threshold,
     max_threshold)
     return llp
 end

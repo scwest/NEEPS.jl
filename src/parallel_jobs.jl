@@ -28,6 +28,7 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
     llp_jobs = SharedArray{Int, 1}((size(expression_mat)[1]))
     null_ps = SharedArray{Float64, 1}((null_size))
     lowest_pvals = SharedArray{Float64, 1}((size(expression_mat)[1]))
+    directions = SharedArray{Float64, 1}((size(expression_mat)[1]))
 
 
     @everywhere include("survival_log_rank_pvals.jl")
@@ -58,7 +59,7 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
         #lowest_pvals = lowest_pvals = zeros(size(expression_mat)[1])
         for i in 1:size(expression_mat)[1]
             @spawn begin
-                lowest_pvals[i] = lowest_logrank_p(days_to_event, event, expression_mat[i,:], min_threshold, max_threshold)
+                lowest_pvals[i], directions[i] = lowest_logrank_p(days_to_event, event, expression_mat[i,:], min_threshold, max_threshold)
                 llp_jobs[i] = 1
                 e += 1
             end
@@ -68,7 +69,7 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
             end
         end
         println("")
-        
+
         println("running parallel jobs")
         println("\trefreshing every $interval seconds")
         while null_left > 0 || llp_left > 0
@@ -83,5 +84,5 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
     end
 
     println("all parallel jobs have finished")
-    return null_ps, lowest_pvals
+    return null_ps, lowest_pvals, directions
 end
