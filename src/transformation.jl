@@ -3,8 +3,8 @@ using MultipleTesting
 transformation of lowest-pvalues using estimated null distribution
 """
 function generate_neep_pvals(sorted_lowest_pvals, null_ps)
-    neep_pvals = zeros(length(sorted_lowest_pvals))
-    neep_pvals[:] = 1
+    neep_pvals = Array{Float64, 1}(undef, length(sorted_lowest_pvals))
+    neep_pvals[:] .= 1
     pval = pop!(sorted_lowest_pvals) # lowest p-value pulled off
     spot = 1
     b = false
