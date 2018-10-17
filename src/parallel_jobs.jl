@@ -63,7 +63,7 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
         while null_left > 0 || llp_left > 0
             null_left = length(null_jobs) - sum(null_jobs)
             llp_left = length(llp_jobs) - sum(llp_jobs)
-            print("\tNull Jobs Left: $null_left\tSurvival Jobs Left: $llp_left\tTime Passed: $time_passed\r")
+            print("\r\tNull Jobs Left: $null_left\tSurvival Jobs Left: $llp_left\tTime Passed: $time_passed")
             flush(io)
             sleep(interval)
             time_passed += interval
