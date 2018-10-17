@@ -12,9 +12,12 @@ function upload_expression(input_filename, clinical_patient_order)
         fsize
     end
 
-    expression_mat, element_order =
+    expression_mat, element_order, nc_indices =
     open(input_filename) do infile
         patient_order = split(strip(readline(infile)), ",")[2:end]
+        nc_indices = getindex(clinical_patient_order,
+                              sort(patient_order, by=i->findfirst(clinical_patient_order.==i))
+                             )
         indx = sortperm(patient_order, by=i->findfirst(clinical_patient_order.==i))
         element_order = String[]
         expression_mat = Array{Float64, 2}(undef, fsize, length(patient_order))
@@ -27,9 +30,9 @@ function upload_expression(input_filename, clinical_patient_order)
             expression_mat[i,:] = expressions'
             i += 1
         end
-        (expression_mat, element_order)
+        (expression_mat, element_order, nc_indices)
     end
-    return expression_mat, element_order
+    return expression_mat, element_order, nc_indices
 end
 
 function upload_clinical(input_filename)
@@ -66,8 +69,11 @@ function get_input()
     upload_clinical(parsed_args["clinical_filename"])
 
     println("uploading expression file")
-    expression_mat, element_order =
+    expression_mat, element_order, nc_indices =
     upload_expression(parsed_args["expression_filename"], clinical_patient_order)
+    clinical_patient_order = clinical_patient_order[nc_indices]
+    days_to_event = days_to_event[nc_indices]
+    event = event[nc_indices]
 
     println("setting standard variables")
     min_threshold = parsed_args["min_thresh"]
