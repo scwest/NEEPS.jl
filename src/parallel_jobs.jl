@@ -48,6 +48,7 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
             @spawn begin
                 null_ps[i] = null_run(days_to_event, event, min_threshold, max_threshold)
                 null_jobs[i] = 1
+                println("temp")
             end
             e += 1
             if e % 1000 == 0
@@ -55,6 +56,8 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
                 flush(io)
             end
         end
+        println(length(null_jobs))
+        println(sum(null_jobs))
 
         #lowest_pvals = lowest_pvals = zeros(size(expression_mat)[1])
         for i in 1:size(expression_mat)[1]
