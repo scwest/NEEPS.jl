@@ -41,7 +41,7 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
     time_passed = 0
     io = IOBuffer()
     e = 0
-    total = length(null_jobs) + length(llps_jobs)
+    total = length(null_jobs) + length(llp_jobs)
     @sync begin
         #null_ps = zeros(null_size)
         for i in 1:null_size
