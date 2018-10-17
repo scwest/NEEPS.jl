@@ -33,13 +33,14 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
     @everywhere include("survival_log_rank_pvals.jl")
 
     # create a channel with the jobs for the null distribution
-    println("running parallel jobs")
+    println("assigning parallel jobs")
     interval = 1
     null_left = length(null_jobs) - sum(null_jobs)
     llp_left = length(llp_jobs) - sum(llp_jobs)
     time_passed = 0
     io = IOBuffer()
     e = 0
+    total = length(null_jobs) + length(llps_jobs)
     @sync begin
         #null_ps = zeros(null_size)
         for i in 1:null_size
@@ -49,9 +50,7 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
                 e += 1
             end
             if e % 1000 == 0
-                null_left = length(null_jobs) - sum(null_jobs)
-                llp_left = length(llp_jobs) - sum(llp_jobs)
-                print("\tNull Jobs Left: $null_left\tSurvival Jobs Left: $llp_left\r")
+                print("\r\tassigned $e of $total jobs")
                 flush(io)
             end
         end
@@ -64,12 +63,13 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
                 e += 1
             end
             if e % 1000 == 0
-                null_left = length(null_jobs) - sum(null_jobs)
-                llp_left = length(llp_jobs) - sum(llp_jobs)
-                print("\tNull Jobs Left: $null_left\tSurvival Jobs Left: $llp_left\r")
+                print("\r\tassigned $e of $total jobs")
                 flush(io)
             end
         end
+        println("")
+        
+        println("running parallel jobs")
         println("\trefreshing every $interval seconds")
         while null_left > 0 || llp_left > 0
             null_left = length(null_jobs) - sum(null_jobs)
