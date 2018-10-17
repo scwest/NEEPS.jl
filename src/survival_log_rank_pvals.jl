@@ -15,7 +15,6 @@ get_var(s::Float64, ss::Float64, total::Int64) = (ss - (s^2 / total)) / (total -
 function get_ordered_indices(expression, min_threshold, max_threshold)
     group = Array{Bool, 1}(undef, length(expression))
     group[:] .= 0
-    println("after")
     lowest_0_index = convert(Int16, floor(length(expression)*min_threshold))
     largest_threshold_index = convert(Int16, floor(length(expression)*max_threshold))
     p = sortperm(expression)[lowest_0_index:largest_threshold_index]
@@ -37,7 +36,7 @@ function lowest_logrank_p(days_to_event, event, expression,
     p, group = get_ordered_indices(expression, min_threshold, max_threshold)
     # reverse p since pop is faster than shift
     println("not glo")
-    p = flipdim(p, 1)
+    p = reverse(p, 1)
     println("not flipdim")
     lowest_pval = 1.0
     println("direction?")
