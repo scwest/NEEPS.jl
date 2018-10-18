@@ -18,7 +18,8 @@ export
     alpha_choice,
     null_vs_lowest,
     lowest_logrank_p,
-    null_run
+    null_run,
+    export_distribution
 
 include("command_line_arguments.jl")
 include("survival_log_rank_pvals.jl")
