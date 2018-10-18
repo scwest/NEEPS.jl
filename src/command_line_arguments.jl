@@ -99,16 +99,16 @@ function get_input()
     days_to_event = days_to_event[nc_indices]
     event = event[nc_indices]
 
-    println("filtering expression matrix (require > min_threshold expression values)")
-    expression_mat = filter_expression(expression_mat, min_threshold)
-
     println("setting standard variables")
     min_threshold = parsed_args["min_thresh"]
     max_threshold = parsed_args["max_thresh"]
     null_size = parsed_args["null_size"]
     num_workers = parsed_args["num_workers"]
-
     output_prefix = parsed_args["output_prefix"]
+
+
+    println("filtering expression matrix (require > min_threshold expression values)")
+    expression_mat = filter_expression(expression_mat, min_threshold)
 
     return clinical_patient_order, days_to_event, event, expression_mat,
     element_order, min_threshold, max_threshold, null_size, output_prefix,
