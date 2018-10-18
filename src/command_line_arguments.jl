@@ -25,7 +25,7 @@ function filter_expression(expression_mat, element_order, min_threshold)
             spot += 1
         end
     end
-    return expression_mat, new_element_order
+    return new_expression_mat, new_element_order
 end
 
 function upload_expression(input_filename, clinical_patient_order)
