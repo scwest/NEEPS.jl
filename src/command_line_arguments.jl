@@ -4,7 +4,7 @@ using ArgParse
 functions for parsing specific input arguments
 """
 function enough_expression(a, min_threshold)
-    return ifelse(length(findall(i->i==0, a)) < min_threshold*length(a), true, false)
+    return length(findall(i->i==0, a)) < min_threshold*length(a)
 end
 
 function filter_expression(expression_mat, element_order, min_threshold)
