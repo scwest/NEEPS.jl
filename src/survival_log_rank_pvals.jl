@@ -71,7 +71,7 @@ function get_test_statistic(days_to_event, event, group)
             e = get_e(m[1], m[2], n[1], n[2])
             s += e
             prev_days = days_to_event[i]
-            print(e)
+            println(e)
 
             total += m
             n -= m+g
