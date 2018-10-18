@@ -10,7 +10,7 @@ end
 function filter_expression(expression_mat, min_threshold)
     nem_length = 0
     for i in 1:size(expression_mat)[1]
-        if enough_expression(expression_mat[i,:])
+        if enough_expression(expression_mat[i,:], min_threshold)
             nem_length += 1
         end
     end
