@@ -44,5 +44,9 @@ ordered_neep_adj_pvals = adjust_neep_all(ordered_neep_pvals)
 
 # Final p-value export
 export_to_file(element_order, ordered_neep_adj_pvals, directions,
-string(output_prefix, "/neep_adjusted_pvalues.txt"))
+               string(output_prefix, "/neep_adjusted_pvalues.txt"))
+println("exporting null distribution")
+export_distribution(null_ps, string(output_prefix, "/null.txt"))
+println("exporting lowest p-values")
+export_distribution(lowest_pvals, string(output_prefix, "/lowest_pvals.txt"))
 println("")

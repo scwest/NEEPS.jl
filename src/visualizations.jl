@@ -18,7 +18,7 @@ function null_vs_lowest(null_ps, lowest_pvals, outfilename)
     p = plot(df, x="vals", color="dist", Geom.density,
     Guide.xlabel("p-value"), Guide.ylabel("density"),
     Guide.title("Distributions: Lowest p-value vs Expected Null"))
-    draw(SVG(outfilename, 21cm, 15cm), p)
+    draw(PNG(outfilename, 21cm, 15cm), p)
 end
 
 function make_blank_alpha_array(unp, alp)
@@ -52,5 +52,5 @@ function alpha_choice(unordered_neep_pvals, outfilename)
         Guide.xlabel("a*i/N"), Guide.ylabel("pval_i"),
         Guide.title("alpha = 0.3"))
     p = hstack(plot1, plot2, plot3, plot4)
-    draw(SVG(outfilename, 60cm, 15cm), p)
+    draw(PNG(outfilename, 60cm, 15cm), p)
 end
