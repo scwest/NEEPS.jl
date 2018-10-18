@@ -18,7 +18,7 @@ function filter_expression(expression_mat, min_threshold)
     new_expression_mat = Array{Float64, 2}(undef, nem_length, size(expression_mat)[2])
     spot = 1
     for i in 1:size(expression_mat)[1]
-        if enough_expression(expression_mat[i,:])
+        if enough_expression(expression_mat[i,:], min_threshold)
             new_expression_mat[spot,:] = expression_mat[i,:]
         end
     end
