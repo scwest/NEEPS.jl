@@ -23,7 +23,7 @@ function null_vs_lowest(null_ps, lowest_pvals, outfilename)
 end
 
 function make_blank_alpha_array(unp, alp)
-    unp = unp[1:length(unp)/10]
+    unp = unp[1:Int(length(unp)/10)]
     rhs = Array{Float64, 1}(undef, length(unp))
     for i in 1:length(unp)
         rhs[i] = alp*i/length(unp)
