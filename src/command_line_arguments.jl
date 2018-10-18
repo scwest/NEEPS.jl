@@ -5,7 +5,7 @@ functions for parsing specific input arguments
 """
 function upload_expression(input_filename, clinical_patient_order)
     fsize = open(input_filename) do infile
-        fsize = 0
+        fsize = -1
         for line in eachline(infile)
             fsize += 1
         end

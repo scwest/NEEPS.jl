@@ -34,22 +34,22 @@ end
 
 function alpha_choice(unordered_neep_pvals, outfilename)
     rhs = make_blank_alpha_array(unordered_neep_pvals, 0.05)
-    plot1 = plot(rhs, x="x2", y="x1", Geom.point,
+    plot1 = plot(rhs, x="x1", y="x2", Geom.point,
         intercept=[0], slope=[1], Geom.abline(color="white", style=:dash),
         Guide.xlabel("a*i/N"), Guide.ylabel("pval_i"),
         Guide.title("alpha = 0.05"))
     rhs = make_blank_alpha_array(unordered_neep_pvals, 0.1)
-    plot2 = plot(rhs, x="x2", y="x1", Geom.point,
+    plot2 = plot(rhs, x="x1", y="x2", Geom.point,
         intercept=[0], slope=[1], Geom.abline(color="white", style=:dash),
         Guide.xlabel("a*i/N"), Guide.ylabel("pval_i"),
         Guide.title("alpha = 0.1"))
     rhs = make_blank_alpha_array(unordered_neep_pvals, 0.2)
-    plot3 = plot(rhs, x="x2", y="x1", Geom.point,
+    plot3 = plot(rhs, x="x1", y="x2", Geom.point,
         intercept=[0], slope=[1], Geom.abline(color="white", style=:dash),
         Guide.xlabel("a*i/N"), Guide.ylabel("pval_i"),
         Guide.title("alpha = 0.2"))
     rhs = make_blank_alpha_array(unordered_neep_pvals, 0.3)
-    plot4 = plot(rhs, x="x2", y="x1", Geom.point,
+    plot4 = plot(rhs, x="x1", y="x2", Geom.point,
         intercept=[0], slope=[1], Geom.abline(color="white", style=:dash),
         Guide.xlabel("a*i/N"), Guide.ylabel("pval_i"),
         Guide.title("alpha = 0.3"))
