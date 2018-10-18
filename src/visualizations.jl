@@ -1,5 +1,6 @@
 using DataFrames
 using Gadfly
+using Cairo
 
 function null_vs_lowest(null_ps, lowest_pvals, outfilename)
     println("producing null vs lowest plot")
