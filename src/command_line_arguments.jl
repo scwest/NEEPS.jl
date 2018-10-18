@@ -7,7 +7,7 @@ function enough_expression(a, min_threshold)
     return ifelse(length(findall(i->i==0, a)) < min_threshold*length(a), true, false)
 end
 
-function filter_expression(expression_mat, min_threshold)
+function filter_expression(expression_mat, element_order, min_threshold)
     nem_length = 0
     for i in 1:size(expression_mat)[1]
         if enough_expression(expression_mat[i,:], min_threshold)
@@ -16,13 +16,15 @@ function filter_expression(expression_mat, min_threshold)
     end
 
     new_expression_mat = Array{Float64, 2}(undef, nem_length, size(expression_mat)[2])
+    new_element_order = Array{String, 1}(undef, nem_length)
     spot = 1
     for i in 1:size(expression_mat)[1]
         if enough_expression(expression_mat[i,:], min_threshold)
             new_expression_mat[spot,:] = expression_mat[i,:]
+            new_element_order[i] = element_order[i]
         end
     end
-    return expression_mat
+    return expression_mat, new_element_order
 end
 
 function upload_expression(input_filename, clinical_patient_order)
@@ -107,8 +109,8 @@ function get_input()
     output_prefix = parsed_args["output_prefix"]
 
 
-    println("filtering expression matrix (require > min_threshold expression values)")
-    expression_mat = filter_expression(expression_mat, min_threshold)
+    println("filtering expression matrix (require > $min_threshold expression values)")
+    expression_mat, element_order = filter_expression(expression_mat, element_order, min_threshold)
 
     return clinical_patient_order, days_to_event, event, expression_mat,
     element_order, min_threshold, max_threshold, null_size, output_prefix,
