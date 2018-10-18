@@ -3,6 +3,28 @@ using ArgParse
 """
 functions for parsing specific input arguments
 """
+function enough_expression(a, min_threshold)
+    return ifelse(length(findall(i->i==0, a)) < min_threshold*length(a), true, false)
+end
+
+function filter_expression(expression_mat, min_threshold)
+    nem_length = 0
+    for i in 1:size(expression_mat)[1]
+        if enough_expression(expression_mat[i,:])
+            nem_length += 1
+        end
+    end
+
+    new_expression_mat = Array{Float64, 2}(undef, nem_length, size(expression_mat)[2])
+    spot = 1
+    for i in 1:size(expression_mat)[1]
+        if enough_expression(expression_mat[i,:])
+            new_expression_mat[spot,:] = expression_mat[i,:]
+        end
+    end
+    return expression_mat
+end
+
 function upload_expression(input_filename, clinical_patient_order)
     fsize = open(input_filename) do infile
         fsize = -1
@@ -76,6 +98,9 @@ function get_input()
     clinical_patient_order = clinical_patient_order[nc_indices]
     days_to_event = days_to_event[nc_indices]
     event = event[nc_indices]
+
+    println("filtering expression matrix (require > min_threshold expression values)")
+    expression_mat = filter_expression(expression_mat, min_threshold)
 
     println("setting standard variables")
     min_threshold = parsed_args["min_thresh"]

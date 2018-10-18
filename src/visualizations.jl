@@ -23,10 +23,11 @@ function null_vs_lowest(null_ps, lowest_pvals, outfilename)
 end
 
 function make_blank_alpha_array(unp, alp)
+    n = length(unp)
     unp = unp[1:Int(round(length(unp)/10))]
     rhs = Array{Float64, 1}(undef, length(unp))
     for i in 1:length(unp)
-        rhs[i] = alp*i/length(unp)
+        rhs[i] = alp*i/n
     end
     df = DataFrame(hcat(unp, rhs))
     return df
@@ -34,22 +35,22 @@ end
 
 function alpha_choice(unordered_neep_pvals, outfilename)
     rhs = make_blank_alpha_array(unordered_neep_pvals, 0.05)
-    plot1 = plot(rhs, x="x1", y="x2", Geom.point,
+    plot1 = plot(rhs, x="x2", y="x1", Geom.point,
         intercept=[0], slope=[1], Geom.abline(color="white", style=:dash),
         Guide.xlabel("a*i/N"), Guide.ylabel("pval_i"),
         Guide.title("alpha = 0.05"))
     rhs = make_blank_alpha_array(unordered_neep_pvals, 0.1)
-    plot2 = plot(rhs, x="x1", y="x2", Geom.point,
+    plot2 = plot(rhs, x="x2", y="x1", Geom.point,
         intercept=[0], slope=[1], Geom.abline(color="white", style=:dash),
         Guide.xlabel("a*i/N"), Guide.ylabel("pval_i"),
         Guide.title("alpha = 0.1"))
     rhs = make_blank_alpha_array(unordered_neep_pvals, 0.2)
-    plot3 = plot(rhs, x="x1", y="x2", Geom.point,
+    plot3 = plot(rhs, x="x2", y="x1", Geom.point,
         intercept=[0], slope=[1], Geom.abline(color="white", style=:dash),
         Guide.xlabel("a*i/N"), Guide.ylabel("pval_i"),
         Guide.title("alpha = 0.2"))
     rhs = make_blank_alpha_array(unordered_neep_pvals, 0.3)
-    plot4 = plot(rhs, x="x1", y="x2", Geom.point,
+    plot4 = plot(rhs, x="x2", y="x1", Geom.point,
         intercept=[0], slope=[1], Geom.abline(color="white", style=:dash),
         Guide.xlabel("a*i/N"), Guide.ylabel("pval_i"),
         Guide.title("alpha = 0.3"))
