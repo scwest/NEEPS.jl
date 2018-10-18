@@ -22,6 +22,7 @@ function filter_expression(expression_mat, element_order, min_threshold)
         if enough_expression(expression_mat[i,:], min_threshold)
             new_expression_mat[spot,:] = expression_mat[i,:]
             new_element_order[spot] = element_order[i]
+            spot += 1
         end
     end
     return expression_mat, new_element_order
