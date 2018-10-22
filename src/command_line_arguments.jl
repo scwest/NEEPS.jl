@@ -74,10 +74,12 @@ function upload_clinical(input_filename)
             push!(days_to_event, parse(Float64, line[2]))
             push!(event, parse(Float64, line[3]))
         end
-        combined = sort(collect(zip(days_to_event, event, clinical_patient_order)), by=x->x[1])
-        days_to_event = getindex.(combined, 1)
-        event = getindex.(combined, 2)
-        clinical_patient_order = getindex.(combined, 3)
+        combined = hcat(days_to_event, event, clinical_patient_order)
+        combined = sortslices(combined, by=x->(x[2]), rev=true, dims=1)
+        combined = sortslices(combined, by=x->(x[1]), dims=1)
+        days_to_event = combined[:,1]
+        event = combined[:,2]
+        clinical_patient_order = combined[:,3]
         (days_to_event, event, clinical_patient_order)
     end
     return clinical_patient_order, days_to_event, event

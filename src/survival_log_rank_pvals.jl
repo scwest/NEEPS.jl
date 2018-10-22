@@ -7,6 +7,14 @@ Simple Functions
 # calculate the stepwise e value for generating log-rank statistic
 get_e(m1, m2, n1, n2) = n1 * (m1+m2) / (n1+n2)
 
+# stepwise variance
+function get_v(m1, m2, n1, n2)
+    n = m1+m2 # wiki
+    K = n1
+    N = n1+n2
+    return(n * (K/N) * ((N-K)/N) * ((N-n)/(N-1)))
+end
+
 # calculate variance from sum and sum of squares, and total
 get_var(s::Float64, ss::Float64, total::Int64) = (ss - (s^2 / total)) / (total - 1)
 
@@ -56,8 +64,8 @@ function get_test_statistic(days_to_event, event, group)
     m = [0,0]
     g = [0,0]
     s = 0.0
-    ss = 0.0
-    prev_days = 0
+    var = 0.0
+    prev_days = days_to_event[1]
     for i in 1:length(days_to_event)
         if days_to_event[i] == prev_days || sum(m) == 0
             if event[i] == 0
@@ -69,10 +77,10 @@ function get_test_statistic(days_to_event, event, group)
             end
         else
             e = get_e(m[1], m[2], n[1], n[2])
+            v = get_v(m[1], m[2], n[1], n[2])
             s += e
+            var += v
             prev_days = days_to_event[i]
-            println([m[1], m[2], n[1], n[2]])
-            println(e)
 
             total += m
             n -= m+g
@@ -85,11 +93,7 @@ function get_test_statistic(days_to_event, event, group)
             end
         end
     end
-    a = (total[1] - s)^2 / s
-    s2 = total[1]+total[2]-s
-    b = (total[2] - s2)^2 / s2
-
-    return a+b, (total[1] - s) > 0
+    return (total[1]-s)^2/var, (total[1] - s) > 0
 end
 
 function null_run(days_to_event, event, min_threshold,
