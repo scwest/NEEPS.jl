@@ -1,7 +1,7 @@
 julia 1.0.1
-Distributions 0.16.4
+Distributions 0.16.4+
 ArgParse 0.6.0+
 Gadfly 0.8.0+
-DataFrames 0.14.1
-MultipleTesting 0.4.1
-Cairo 0.5.6
+DataFrames 0.14.1+
+MultipleTesting 0.4.1+
+Cairo 0.5.6+
