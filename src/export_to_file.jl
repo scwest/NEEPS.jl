@@ -1,9 +1,13 @@
-function export_to_file(element_order, ordered_neep_adj_pvals, directions, output_filename)
+function export_to_file(element_order, lowest_pvals, ordered_neep_pvals,
+                        ordered_neep_adj_pvals, directions,
+                        output_filename)
     println("exporting p-values")
     open(output_filename, "w") do outfile
-        for (element, pval, direction) in zip(element_order, ordered_neep_adj_pvals, directions)
+        write(outfile, "name\tlowest_p-value\tneep_p-value\tadjusted_neep\tdirection\n")
+        for (element, lp, neep, adj, direction) in
+            zip(element_order, lowest_pvals, ordered_neep_pvals, ordered_neep_adj_pvals, directions)
             dstring = ifelse(direction > 0, "high expression survived longer", "low expression survived longer")
-            write(outfile, "$element\t$pval\t$dstring\n")
+            write(outfile, "$element\t$lp\t$neep\t$adj\t$dstring\n")
         end
     end
 end

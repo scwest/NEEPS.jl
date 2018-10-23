@@ -43,7 +43,7 @@ string(output_prefix, "/visuals/test1_alpha_choice.svg"))
 ordered_neep_adj_pvals = adjust_neep_all(ordered_neep_pvals)
 
 # Final p-value export
-export_to_file(element_order, ordered_neep_adj_pvals, directions,
+export_to_file(element_order, lowest_pvals, ordered_neep_pvals, ordered_neep_adj_pvals, directions,
                string(output_prefix, "/neep_adjusted_pvalues.txt"))
 println("exporting null distribution")
 export_distribution(null_ps, string(output_prefix, "/null.txt"))
