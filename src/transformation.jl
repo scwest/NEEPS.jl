@@ -40,6 +40,6 @@ function generate_neep_all(null_ps, lowest_pvals)
 end
 
 function adjust_neep_all(ordered_neep_pvals)
-    ordered_neep_adj_pvals = adjust(ordered_neep_pvals, BenjaminiHochberg())
+    ordered_neep_adj_pvals = adjust(ordered_neep_pvals, Holm())
     return ordered_neep_adj_pvals
 end
