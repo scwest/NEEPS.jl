@@ -5,7 +5,7 @@ using Distributions
 Simple Functions
 """
 # calculate the stepwise e value for generating log-rank statistic
-get_e(m1, m2, n1, n2) = n1 * (m1+m2) / (n1+n2)
+get_e(m1, m2, n1, n2) = m1 - (n1 * (m1+m2) / (n1+n2))
 
 # stepwise variance
 function get_v(m1, m2, n1, n2)
@@ -58,42 +58,36 @@ function lowest_logrank_p(days_to_event, event, expression,
 end
 
 function get_test_statistic(days_to_event, event, group)
-    total = [0,0]
-    n1s = sum(group)
-    n = [length(group)-n1s, n1s]
-    m = [0,0]
-    g = [0,0]
-    s = 0.0
-    var = 0.0
+    n = [length(group)-sum(group), sum(group)]
+    censored = [0, 0]
+    observed = [0, 0]
+
+    num = 0.0
+    den = 0.0
+
     prev_days = days_to_event[1]
     for i in 1:length(days_to_event)
-        if days_to_event[i] == prev_days || sum(m) == 0
-            if event[i] == 0
-                g[group[i]+1] += 1
-            else
-                n -= g
-                g = [0,0]
-                m[group[i]+1] += 1
-            end
-        else
-            e = get_e(m[1], m[2], n[1], n[2])
-            v = get_v(m[1], m[2], n[1], n[2])
-            s += e
-            var += v
-            prev_days = days_to_event[i]
+        if days_to_event[i] != prev_days
+            num += get_e(observed[1], observed[2], n[1], n[2])
+            den += get_v(observed[1], observed[2], n[1], n[2])
 
-            total += m
-            n -= m+g
-            m = [0,0]
-            g = [0,0]
-            if event[i] == 0
-                g[group[i]+1] += 1
-            else
-                m[group[i]+1] += 1
-            end
+            n -= censored+observed
+            censored = [0,0]
+            observed = [0,0]
         end
+
+        if event[i] == 0
+            censored[group[i]+1] += 1
+        else
+            observed[group[i]+1] += 1
+        end
+        prev_days = days_to_event[i]
     end
-    return (total[1]-s)^2/var, (total[1] - s) > 0
+
+    num += get_e(observed[1], observed[2], n[1], n[2])
+    den += get_v(observed[1], observed[2], n[1], n[2])
+
+    return (num^2)/den, num > 0
 end
 
 function null_run(days_to_event, event, min_threshold,
