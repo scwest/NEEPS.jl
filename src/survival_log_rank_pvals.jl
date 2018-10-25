@@ -15,9 +15,6 @@ function get_v(m1, m2, n1, n2)
     return(n * (K/N) * ((N-K)/N) * ((N-n)/(N-1)))
 end
 
-# calculate variance from sum and sum of squares, and total
-get_var(s::Float64, ss::Float64, total::Int64) = (ss - (s^2 / total)) / (total - 1)
-
 # return ordered list of indices to change from group = 0 to group = 1
 # also initializes group array
 function get_ordered_indices(expression, min_threshold, max_threshold)
@@ -84,11 +81,11 @@ function get_test_statistic(days_to_event, event, group)
         prev_days = days_to_event[i]
     end
 
-    num += get_e(observed[1], observed[2], n[1], n[2])
-    den += get_v(observed[1], observed[2], n[1], n[2])
+    a = get_e(observed[1], observed[2], n[1], n[2])
+    b = get_v(observed[1], observed[2], n[1], n[2])
 
-    println(num)
-    println(den)
+    println(a)
+    println(b)
 
     return (num^2)/den, num > 0
 end
