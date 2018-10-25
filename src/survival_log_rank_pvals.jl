@@ -87,6 +87,9 @@ function get_test_statistic(days_to_event, event, group)
     num += get_e(observed[1], observed[2], n[1], n[2])
     den += get_v(observed[1], observed[2], n[1], n[2])
 
+    println(num)
+    println(den)
+
     return (num^2)/den, num > 0
 end
 
