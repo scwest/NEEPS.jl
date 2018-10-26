@@ -1,5 +1,5 @@
 function export_to_file(element_order, lowest_pvals, ordered_neep_pvals,
-                        ordered_neep_adj_pvals, directions, threshs
+                        ordered_neep_adj_pvals, directions, threshs,
                         output_filename)
     println("exporting p-values")
     open(output_filename, "w") do outfile
