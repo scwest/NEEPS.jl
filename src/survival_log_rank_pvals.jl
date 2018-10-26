@@ -20,11 +20,11 @@ end
 function get_ordered_indices(expression, min_threshold, max_threshold)
     group = Array{Bool, 1}(undef, length(expression))
     group[:] .= 0
-    lowest_0_index = convert(Int16, floor(length(expression)*min_threshold))
-    largest_threshold_index = convert(Int16, floor(length(expression)*max_threshold))
-    p = sortperm(expression)[lowest_0_index:largest_threshold_index]
-    group[p] .= 1
-    p, group
+    low = convert(Int16, floor(length(expression)*min_threshold))
+    high = convert(Int16, floor(length(expression)*max_threshold))
+    p = sortperm(expression)
+    group[p[low:end]] .= 1
+    p[low:high], group
 end
 
 """
@@ -42,6 +42,7 @@ function lowest_logrank_p(days_to_event, event, expression,
     p = reverse(p, 1)
     lowest_pval = 1.0
     direction = true
+    thresh = sum(group)
     while !isempty(p)
         #println(p)
         # move to the next threshold
@@ -49,9 +50,11 @@ function lowest_logrank_p(days_to_event, event, expression,
         group[pop!(p)] = 0  # set that spot to equal 0 (be in KM curve 'low')
         test_statistic, ndirection = get_test_statistic(days_to_event, event, group)
         pval = ccdf(Chisq(1), test_statistic)
-        lowest_pval, direction = ifelse(pval <= lowest_pval, (pval, ndirection), (lowest_pval, direction))
+        lowest_pval, direction, thresh = ifelse(pval <= lowest_pval,
+                                               (pval, ndirection, sum(group)),
+                                               (lowest_pval, direction, thresh))
     end
-    return lowest_pval, direction
+    return lowest_pval, direction, thresh
 end
 
 function get_test_statistic(days_to_event, event, group)
@@ -87,7 +90,7 @@ end
 function null_run(days_to_event, event, min_threshold,
     max_threshold)
     expression = rand(length(days_to_event))
-    llp, direction = lowest_logrank_p(days_to_event, event, expression, min_threshold,
+    llp, direction, thresh = lowest_logrank_p(days_to_event, event, expression, min_threshold,
     max_threshold)
     return llp
 end
