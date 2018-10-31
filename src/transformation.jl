@@ -40,6 +40,15 @@ function generate_neep_all(null_ps, lowest_pvals)
 end
 
 function adjust_neep_all(ordered_neep_pvals)
-    ordered_neep_adj_pvals = adjust(ordered_neep_pvals, Holm())
+    for i in 1:length(ordered_neep_pvals)
+        ordered_neep_adj_pvals[i] = ordered_neep_pvals * length(ordered_neep_pvals) / i
+    end
+    previous = 0.0
+    for i in 1:length(ordered_neep_pvals)
+        if ordered_neep_adj_pvals[i] < previous
+            ordered_neep_adj_pvals[i] = previous
+        end
+        previous = ordered_neep_adj_pvals
+    end
     return ordered_neep_adj_pvals
 end
