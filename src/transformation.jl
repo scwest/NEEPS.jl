@@ -40,13 +40,15 @@ function generate_neep_all(null_ps, lowest_pvals)
 end
 
 function adjust_neep_all(ordered_neep_pvals)
-    new_order = sortperm(ordered_neep_pvals)
-    initial_order = sortperm(initial_order)
-
+    sorted_order = sortperm(ordered_neep_pvals)
+    initial_order = sortperm(sorted_order)
 
     ordered_neep_adj_pvals = Array{Float64, 1}(undef, length(ordered_neep_pvals))
-    for i in 1:length(ordered_neep_pvals)
-        ordered_neep_adj_pvals[i] = ordered_neep_pvals[i] * length(ordered_neep_pvals) / i
+
+    sorted_neep_pvals = ordered_neep_pvals[sorted_order]
+
+    for i in 1:length(sorted_neep_pvals)
+        ordered_neep_adj_pvals[i] = sorted_neep_pvals[i] * length(sorted_neep_pvals) / i
     end
     previous = 0.0
     for i in 1:length(ordered_neep_adj_pvals)
@@ -55,5 +57,5 @@ function adjust_neep_all(ordered_neep_pvals)
         end
         previous = ordered_neep_adj_pvals[i]
     end
-    return ordered_neep_adj_pvals
+    return ordered_neep_adj_pvals[initial_order]
 end
