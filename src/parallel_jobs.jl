@@ -30,6 +30,8 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
     lowest_pvals = SharedArray{Float64, 1}((size(expression_mat)[1]))
     directions = SharedArray{Float64, 1}((size(expression_mat)[1]))
     threshs = SharedArray{Int, 1}((size(expression_mat)[1]))
+    all_pvals_mat = SharedArray{Float64, 2}(size(expression_mat)[1],
+                    floor(size(expression_mat)[1]*(min_threshold+max_threshold)))
 
     # create a channel with the jobs for the null distribution
     println("assigning parallel jobs")
@@ -57,7 +59,7 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
         #lowest_pvals = lowest_pvals = zeros(size(expression_mat)[1])
         for i in 1:size(expression_mat)[1]
             @spawn begin
-                lowest_pvals[i], directions[i], threshs[i] =
+                lowest_pvals[i], directions[i], threshs[i], all_pvals_mat[i] =
                         lowest_logrank_p(days_to_event, event,
                         expression_mat[i,:],
                         min_threshold, max_threshold)
@@ -85,5 +87,5 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
     end
 
     println("all parallel jobs have finished")
-    return null_ps, lowest_pvals, directions, threshs
+    return null_ps, lowest_pvals, directions, threshs, all_pvals_mat
 end

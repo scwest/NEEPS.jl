@@ -20,7 +20,8 @@ export
     lowest_logrank_p,
     null_run,
     export_distribution,
-    get_test_statistic
+    get_test_statistic,
+    export_all_pvals
 
 include("command_line_arguments.jl")
 include("survival_log_rank_pvals.jl")
