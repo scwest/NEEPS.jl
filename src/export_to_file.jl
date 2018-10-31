@@ -1,8 +1,8 @@
 function export_all_pvals(all_pvals_mat, all_thresholds, element_order, output_filename)
     open(output_filename, "w") do outfile
         write(outfile, string(",", join(all_thresholds, ","), "\n"))
-        for i in length(element_order)
-            write(outfile, string(element_order[i], ",", join(all_pvals_mat[i], ","), "\n"))
+        for i in 1:length(element_order)
+            write(outfile, string(element_order[i], ",", join(all_pvals_mat[i,:], ","), "\n"))
         end
     end
 end
