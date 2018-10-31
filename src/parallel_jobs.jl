@@ -33,6 +33,9 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
     all_pvals_mat = SharedArray{Float64, 2}(size(expression_mat)[1],
                     Int(floor(size(expression_mat)[1]*(min_threshold+max_threshold))))
 
+    println(length(event))
+    println(size(expression_mat))
+
     println(size(all_pvals_mat))
     # create a channel with the jobs for the null distribution
     println("assigning parallel jobs")
