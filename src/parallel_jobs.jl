@@ -35,13 +35,6 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
     high = Int(floor(size(expression_mat)[2]*max_threshold))
     all_pvals_mat = SharedArray{Float64, 2}(size(expression_mat)[1],
                     high-low+1)
-
-    println(length(event))
-    println(size(expression_mat))
-
-    println(low)
-    println(high)
-    println(size(all_pvals_mat))
     # create a channel with the jobs for the null distribution
     println("assigning parallel jobs")
     interval = 1
@@ -72,7 +65,6 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
                         lowest_logrank_p(days_to_event, event,
                         expression_mat[i,:],
                         min_threshold, max_threshold)
-                println("after llp")
                 llp_jobs[i] = 1
             end
             e += 1
