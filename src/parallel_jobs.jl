@@ -39,6 +39,8 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
     println(length(event))
     println(size(expression_mat))
 
+    println(low)
+    println(high)
     println(size(all_pvals_mat))
     # create a channel with the jobs for the null distribution
     println("assigning parallel jobs")
