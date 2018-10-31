@@ -54,6 +54,7 @@ function lowest_logrank_p(days_to_event, event, expression,
                                                (pval, ndirection, sum(group)),
                                                (lowest_pval, direction, thresh))
     end
+    println("returning")
     return lowest_pval, direction, thresh, all_pvals
 end
 
