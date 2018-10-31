@@ -60,7 +60,7 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
         #lowest_pvals = lowest_pvals = zeros(size(expression_mat)[1])
         for i in 1:size(expression_mat)[1]
             @spawn begin
-                lowest_pvals[i], directions[i], threshs[i], all_pvals_mat[i] =
+                lowest_pvals[i], directions[i], threshs[i], all_pvals_mat[i,:] =
                         lowest_logrank_p(days_to_event, event,
                         expression_mat[i,:],
                         min_threshold, max_threshold)
