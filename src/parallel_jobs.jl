@@ -30,8 +30,11 @@ function parallel_null_and_curves(null_size, days_to_event, event, min_threshold
     lowest_pvals = SharedArray{Float64, 1}((size(expression_mat)[1]))
     directions = SharedArray{Float64, 1}((size(expression_mat)[1]))
     threshs = SharedArray{Int, 1}((size(expression_mat)[1]))
+
+    low = Int(floor(size(expression_mat)[1]*min_threshold))
+    high = Int(floor(size(expression_mat)[1]*max_threshold))
     all_pvals_mat = SharedArray{Float64, 2}(size(expression_mat)[1],
-                    Int(floor(size(expression_mat)[1]*(min_threshold+max_threshold))))
+                    high-low+1)
 
     println(length(event))
     println(size(expression_mat))
