@@ -46,11 +46,10 @@ function adjust_neep_all(ordered_neep_pvals)
     end
     previous = 0.0
     for i in 1:length(ordered_neep_adj_pvals)
-        println(ordered_neep_adj_pvals[i])
         if ordered_neep_adj_pvals[i] < previous
             ordered_neep_adj_pvals[i] = previous
         end
-        previous = ordered_neep_adj_pvals
+        previous = ordered_neep_adj_pvals[i]
     end
     return ordered_neep_adj_pvals
 end
